@@ -1,0 +1,14 @@
+﻿@model IEnumerable<DancingGoat.Models.Article>
+@{
+    ViewBag.Title = Resources.DancingGoat.Articles;
+    var i = 1;
+}
+@foreach (var article in Model)
+{
+    @Html.DisplayFor((vm) => article)
+    if (i % 4 == 0)
+    {
+        <div class="clear"></div>
+    }
+    i++;
+}

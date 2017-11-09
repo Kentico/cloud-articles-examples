@@ -1,0 +1,29 @@
+﻿@model DancingGoat.Models.CafesViewModel
+
+@{
+    ViewBag.Title = Resources.DancingGoat.Cafes;
+}
+
+<h2>@Resources.DancingGoat.CompanyCafes</h2>
+<div class="row">
+    @Html.DisplayFor(vm => vm.CompanyCafes, new { ShowImage = true })
+</div>
+
+<h2>@Resources.DancingGoat.PartnerCafes_Title</h2>
+<div class="row">
+    @foreach (var cafe in Model.PartnerCafes)
+    {
+        <h3>@Html.DisplayFor(vm => cafe.City), @Html.DisplayFor(vm => cafe.Country)</h3>
+        <p>
+            @Html.DisplayFor(vm => cafe.System.Name), @Html.DisplayFor(vm => cafe.Street), @Html.DisplayFor(vm => cafe.Phone)
+        </p>
+    }
+</div>
+
+<h2 class="map-title">@Resources.DancingGoat.Cafes_MapTitle</h2>
+<div class="map js-map"></div>
+
+@section Scripts {
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVOq4C-rf7JVeHt6ws9vsf-KHIRpueASg"></script>
+    @Scripts.Render("~/Scripts/map.js")
+}

@@ -1,0 +1,100 @@
+﻿@model DancingGoat.Models.HomeViewModel
+
+@{
+    ViewBag.Title = Resources.DancingGoat.Home;
+}
+
+@helper MoreButton(string text, string url)
+{
+    <div class="row">
+        <div class="clear center-text">
+            <a href="@url" class="btn btn-more">
+                @text
+            </a>
+        </div>
+    </div>
+}
+
+@if (Model.Header != null)
+{
+    var image = Model.Header.Image.FirstOrDefault();
+    <section class="banner-section" style="background-image: url('@(image != null ? image.Url : "")');">
+        <h2 class="banner-heading">@Html.DisplayFor(vm => vm.Header.Title)</h2>
+        <div class="banner-text">
+            @Html.DisplayFor(vm => vm.Header.MarketingMessage)
+        </div>
+    </section>
+}
+
+<div class="row">
+    <h1 class="title-tab">@Resources.DancingGoat.Articles_LatestOne</h1>
+    @{var isFirstArticle = true; }
+    @foreach (DancingGoat.Models.Article article in Model.ContentItem.Articles)
+    {
+        if (isFirstArticle)
+        {
+            isFirstArticle = false;
+            <div class="article-tile article-tile-large">
+                <div class="col-md-12 col-lg-6">
+                    <a href="@Url.Action("Show", "Articles", new { urlSlug = article.UrlPattern })">
+                        @Html.AssetImage(article.TeaserImage.FirstOrDefault(), cssClass: "article-tile-image")
+                    </a>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="article-tile-date">
+                        @Html.DateTimeFormattedFor(vm => article.PostDate, "M")
+                    </div>
+                    <div class="article-tile-content">
+                        <h2>
+                            <a href="@Url.Action("Show", "Articles", new { urlSlug = article.UrlPattern })">@article.Title</a>
+                        </h2>
+                        <p class="article-tile-text lead-paragraph">
+                            @Html.DisplayFor(vm => article.Summary)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            @Html.DisplayFor(vm => article)
+        }
+    }
+</div>
+
+@MoreButton(Resources.DancingGoat.Articles_More, Url.Action("Index", "Articles"))
+
+@foreach (DancingGoat.Models.FactAboutUs factAboutUs in Model.ContentItem.OurStory)
+{
+    var image = factAboutUs.Image.FirstOrDefault();
+    <div class="row">
+        <h1 class="title-tab">@factAboutUs.Title</h1>
+        <div class="col-sm-12">
+            <div class="ourstory-section center-text" style="background-image: url('@(image != null ? image.Url : "")');">
+                @Html.DisplayFor(vm => factAboutUs.Description)
+            </div>
+        </div>
+    </div>
+
+    @MoreButton(Resources.DancingGoat.Story_WholeStory, Url.Action("Index", "About"))
+}
+
+<div class="row">
+    <div>
+        <h1 class="title-tab">@Resources.DancingGoat.CompanyCafes_Title</h1>
+    </div>
+    @foreach (DancingGoat.Models.Cafe cafe in Model.ContentItem.Cafes)
+    {
+        <div class="col-xs-6 col-md-3">
+            <div>
+                <a href="@Url.Action("Index", "Cafes")" class="ourcoffee-tile-link">
+                    <h2 class="ourcoffee-tile-text center-text">@cafe.System.Name</h2>
+                    <span class="cafe-overlay"> </span>
+                    @Html.AssetImage(cafe.Photo.FirstOrDefault(), cssClass: "ourcoffee-tile-image")
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+@MoreButton(Resources.DancingGoat.Cafes_More, Url.Action("Index", "Cafes"))
