@@ -6,4 +6,4 @@ The example ASP.NET MVC Core app that showcases the possibility for the content 
 
 ## How To Run the Code
 
-Just clone the repo and run it. No further configuration is required.
+Just clone the repo, open the [NavigationMenusMvc.sln](https://github.com/Kentico/cloud-articles-examples/blob/master/cloud-example-navigation/NavigationMenusMvc.sln) solution and run it. No further configuration is required.

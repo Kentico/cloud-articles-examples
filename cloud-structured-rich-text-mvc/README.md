@@ -6,4 +6,4 @@ A modified Dancing Goat MVC sample site that showcases the usage of MVC display 
 
 ## How To Run the Code
 
-Just clone the repo and run it. No further configuration is required.
+Just clone the repo, open the [DancingGoat.sln](https://github.com/Kentico/cloud-articles-examples/blob/master/cloud-structured-rich-text-mvc/DancingGoat.sln) solution and run it. No further configuration is required.

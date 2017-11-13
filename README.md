@@ -4,7 +4,7 @@ A common repository for code examples used in articles, blog posts, forums, etc.
 
 ## Structured Rich Text Rendering in MVC
 
-The [example code](https://github.com/Kentico/cloud-articles-examples/tree/master/structured-rich-text-mvc) for the [Structured Rich Text Rendering in MVC](https://kenticocloud.com/blog/structured-rich-text-rendering-in-mvc) article in the [Kentico Cloud blog](https://kenticocloud.com/blog).
+The [example code](https://github.com/Kentico/cloud-articles-examples/tree/master/cloud-structured-rich-text-mvc) for the [Structured Rich Text Rendering in MVC](https://kenticocloud.com/blog/structured-rich-text-rendering-in-mvc) article in the [Kentico Cloud blog](https://kenticocloud.com/blog).
 
 ## Webhook Cache Invalidation
 
