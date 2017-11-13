@@ -13,7 +13,3 @@ The [example code](https://github.com/Kentico/cloud-articles-examples/tree/maste
 ## Managing Navigation Menus in Kentico Cloud
 
 The [example code](https://github.com/Kentico/cloud-articles-examples/tree/master/cloud-example-navigation) for the [Managing Navigation Menus in Kentico Cloud](https://kenticocloud.com/blog/managing-navigation-menus-in-kentico-cloud) article in the [Kentico Cloud blog](https://kenticocloud.com/blog).
-
-## Kentico MVC Code Generator
-
-A [preview of a code generator](https://github.com/Kentico/cloud-articles-examples/tree/master/cms-mvc-code-generator) for the DevNet article [Render Online Forms with ASP.NET MVC Display Templates and The Code Generator&mdash;Part 2](https://devnet.kentico.com/articles/render-online-forms-with-asp-net-mvc-display-templates-and-the-code-generator%E2%80%94part-2)
