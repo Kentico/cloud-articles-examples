@@ -449,7 +449,6 @@
     <Content Include="Views\Twitter\Tweet.cshtml" />
     <Content Include="Views\Articles\DisplayTemplates\Tweet.cshtml" />
     <Content Include="Views\Home\CompanyAddress.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\InlineContentItem.cshtml" />
     <Content Include="Views\Product\Accessory.cshtml" />
     <Content Include="Views\Accessories\AccessoriesFilter.cshtml" />
     <Content Include="Views\Accessories\Index.cshtml" />
