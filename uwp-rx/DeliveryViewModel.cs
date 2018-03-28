@@ -1,12 +1,11 @@
-﻿using KenticoCloud.Delivery;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+
+using KenticoCloud.Delivery;
 using UwpRx.Models;
 
 namespace UwpRx
@@ -18,7 +17,10 @@ namespace UwpRx
 
         public string SearchQuery
         {
-            get { return _searchQuery; }
+            get
+            {
+                return _searchQuery;
+            }
             set
             {
                 _searchQuery = value;
@@ -28,7 +30,10 @@ namespace UwpRx
 
         public List<string> Results
         {
-            get { return _results; }
+            get
+            {
+                return _results;
+            }
             set
             {
                 _results = value;
@@ -37,7 +42,6 @@ namespace UwpRx
         }
 
         public DeliveryClient DeliveryClient { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public DeliveryViewModel()
@@ -64,9 +68,9 @@ namespace UwpRx
 
         private void RaisePropertyChanged(string propertyName)
         {
-            if (!string.IsNullOrEmpty(propertyName))
+            if (!string.IsNullOrEmpty(propertyName) && PropertyChanged != null)
             {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }
