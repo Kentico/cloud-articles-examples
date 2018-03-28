@@ -13,3 +13,7 @@ The [example code](https://github.com/Kentico/cloud-articles-examples/tree/maste
 ## Managing Navigation Menus in Kentico Cloud
 
 The [example code](https://github.com/Kentico/cloud-articles-examples/tree/master/cloud-example-navigation) for the [Managing Navigation Menus in Kentico Cloud](https://kenticocloud.com/blog/managing-navigation-menus-in-kentico-cloud) article in the [Kentico Cloud blog](https://kenticocloud.com/blog).
+
+## UWP example of Reactive Extensions for .NET (Rx.NET)
+
+The [example code](https://github.com/Kentico/cloud-articles-examples/tree/master/uwp-rx) that demonstrates the use of Rx.NET together with Kentico Cloud in an Universal Windows App (UWP).
