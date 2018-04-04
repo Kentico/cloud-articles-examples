@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
-
+using System.Threading.Tasks;
 using KenticoCloud.Delivery;
 using UwpRx.Models;
 
@@ -41,29 +41,43 @@ namespace UwpRx
             }
         }
 
-        public DeliveryClient DeliveryClient { get; set; }
+        public DeliveryClient DeliveryClient => new DeliveryClient("975bf280-fd91-488c-994c-2f04416e5ee3");
         public event PropertyChangedEventHandler PropertyChanged;
 
         public DeliveryViewModel()
         {
-            DeliveryClient = new DeliveryClient("975bf280-fd91-488c-994c-2f04416e5ee3");
-
+            // Since Rx is "late to the party" in .NET, Observables are created from traditional .NET events.
+            // Although there has to be an event created, the advantage of Rx is still in that there is just one subscriber to the event that has to be maintained--the Observable.
+            // The Select operator extracts the query.
+            // The DistinctUntilChanged operator guarantees that only unique search phrases are passed around. 
+            // The Throttle operator buffers the user keystrokes for one second before they become visible to the client code.
             var searchQueryObservable = Observable.FromEventPattern<PropertyChangedEventArgs>(this, nameof(PropertyChanged))
                 .Select(e => ((DeliveryViewModel)e.Sender).SearchQuery)
                 .DistinctUntilChanged()
                 .Throttle(TimeSpan.FromSeconds(1));
 
-            // Option 1: Directly populate the Results via an ordinary async/await call to DeliveryClient.
-            //var searchQuerySubscription = searchQueryObservable.Subscribe(async searchQuery => Results = (await DeliveryClient.GetItemsAsync<Article>(new ContainsFilter("elements.persona", searchQuery))).Items.Select(i => i.Title).ToList());
+            // Clear the Results upon each (distinct and throttled) keystroke in the text box. Make sure the observer code executes in the UI thread via the ObserveOn method.
+            searchQueryObservable
+                .ObserveOn(SynchronizationContext.Current)
+                .Subscribe(searchQuery => Results = null);
 
-            // Option 2: Make each call to the DeliveryClient also an observable (with that same async call as an observer).
-            var resultsObservable = searchQueryObservable.SelectMany(async searchQuery => (await DeliveryClient.GetItemsAsync<Article>(new ContainsFilter("elements.personas", searchQuery), new ElementsParameter("title"))).Items.Select(i => i.Title).ToList());
+            // Use the SelectMany operator to:
+            // 1. Listen to the user input via the searchQueryObservable,
+            // 2. Attach another Observable onto it,
+            // 3. Project each sequence of Kentico Cloud content item names into one flat observable sequence.
+            var resultsObservable = searchQueryObservable.SelectMany(async searchQuery => (await GetKenticoCloudResults(searchQuery)));
 
-            // Make the observer code execute through the UI thread's dispatcher and clear the Results upon each (distinct and throttled) keystroke in the text box.
-            searchQueryObservable.ObserveOn(SynchronizationContext.Current).Subscribe(searchQuery => Results = null);
+            // Populate the Results upon each response from Kentico Cloud.
+            resultsObservable
+                .ObserveOn(SynchronizationContext.Current)
+                .Subscribe(results => Results = results);
+        }
 
-            // Do the same thread synchronization for the resultsObservable and populate the Results upon each response from Kentico Cloud.
-            resultsObservable.ObserveOn(SynchronizationContext.Current).Subscribe(results => Results = results);
+        public async Task<List<string>> GetKenticoCloudResults(string searchQuery)
+        {
+            return (await DeliveryClient.GetItemsAsync<Article>(
+                new ContainsFilter("elements.persona", searchQuery)
+                )).Items.Select(i => i.Title).ToList();
         }
 
         private void RaisePropertyChanged(string propertyName)
