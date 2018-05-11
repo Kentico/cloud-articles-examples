@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading;
 
@@ -57,15 +58,16 @@ namespace UwpRx
 
             // Since Rx is "late to the party" in the .NET ecosystem, Observables are created from traditional .NET events.
             // Although there still has to be an event created, the advantage of Rx is in that there is just one subscriber to the event that has to be maintained--the Observable.
-            // The Select operator extracts the query.
-            // The DistinctUntilChanged operator guarantees that only unique search phrases are passed around.
-            // The Throttle operator buffers the user keystrokes for one second before they become visible to the client code.
+            // The Select operator extracts the query. See http://www.introtorx.com/Content/v1.0.10621.0/08_Transformation.html#Select
+            // The Throttle operator buffers the user keystrokes for one second before they become visible to the client code. See http://www.introtorx.com/Content/v1.0.10621.0/13_TimeShiftedSequences.html#Throttle
+            // The DistinctUntilChanged operator guarantees that only unique search phrases are passed around. See http://www.introtorx.com/Content/v1.0.10621.0/05_Filtering.html#Distinct
             var searchQueryObservable = Observable.FromEventPattern<PropertyChangedEventArgs>(this, nameof(PropertyChanged))
                 .Select(e => ((DeliveryViewModel)e.Sender).SearchQuery)
-                .DistinctUntilChanged()
-                .Throttle(TimeSpan.FromSeconds(1));
+                .Throttle(TimeSpan.FromSeconds(1))
+                .DistinctUntilChanged();
 
-            // Clear the Results upon each (distinct and throttled) keystroke in the text box. Make sure the observer code executes in the UI thread via the ObserveOn method.
+            // The ObserveOn operator makes sure the observer code listens for notifications in the UI thread. See http://www.introtorx.com/Content/v1.0.10621.0/15_SchedulingAndThreading.html#SubscribeOnObserveOn
+            // The Subscribe operator declares the observer code. It clears Results upon each (distinct and throttled) keystroke in the text box.
             searchQueryObservable
                 .ObserveOn(SynchronizationContext.Current)
                 .Subscribe(searchQuery => Results.Clear());
@@ -76,8 +78,11 @@ namespace UwpRx
             // 3. Project each sequence of Kentico Cloud content items into one flat observable sequence.
             var resultsObservable = searchQueryObservable.SelectMany(searchQuery => GetArticlesObservable(searchQuery));
 
-            // Populate the Results with the Kentico Cloud response.
+            // The SubscribeOn operator offloads the work to a background thread. See http://www.introtorx.com/Content/v1.0.10621.0/15_SchedulingAndThreading.html#SubscribeOnObserveOn
+            // It is also required to use the ObserveOn operator to get notified back on the UI thread.
+            // The observer populates Results with the Kentico Cloud response.
             resultsObservable
+                .SubscribeOn(NewThreadScheduler.Default)
                 .ObserveOn(SynchronizationContext.Current)
                 .Select(a => a.Title)
                 .Subscribe(result => Results.Add(result));
@@ -89,7 +94,7 @@ namespace UwpRx
 
         public IObservable<Article> GetArticlesObservable(string searchQuery)
         {
-            return DeliveryObservableProxy.GetItemsObservable<Article>(new ContainsFilter("elements.personas", searchQuery));
+            return DeliveryObservableProxy.GetItemsObservable<Article>(new ContainsFilter("elements.personas", searchQuery), new DepthParameter(0));
         }
 
         #endregion

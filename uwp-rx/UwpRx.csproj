@@ -99,20 +99,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\AboutUs.cs" />
-    <Compile Include="Models\Accessory.cs" />
     <Compile Include="Models\Article.cs" />
-    <Compile Include="Models\Brewer.cs" />
-    <Compile Include="Models\Cafe.cs" />
-    <Compile Include="Models\Coffee.cs" />
     <Compile Include="Models\CustomTypeProvider.cs" />
-    <Compile Include="Models\FactAboutUs.cs" />
-    <Compile Include="Models\Grinder.cs" />
-    <Compile Include="Models\HeroUnit.cs" />
-    <Compile Include="Models\Home.cs" />
-    <Compile Include="Models\HostedVideo.cs" />
-    <Compile Include="Models\Office.cs" />
-    <Compile Include="Models\Tweet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
