@@ -1,0 +1,128 @@
+﻿@using Blazor.Shared
+@using Blazor.Shared.Models
+@using KenticoCloud.Delivery
+@using Newtonsoft.Json.Linq
+@page "/kc"
+@inject IDeliveryClient DeliveryClient
+@inject HttpClient Http
+
+<h1>Conventional Bike</h1>
+
+
+@if (bike == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>@bike.Name</td>
+            </tr>
+            <tr>
+                <th>Bike Kind</th>
+                <td>@bike.BikeKind</td>
+            </tr>
+            <tr>
+                <th>Short Description</th>
+                <td>@bike.ShortDescription</td>
+            </tr>
+            <tr>
+                <th>Long Description</th>
+                <td>@bike.LongDescription</td>
+            </tr>
+            <tr>
+                <th>Frame</th>
+                <td>@bike.Frame</td>
+            </tr>
+            <tr>
+                <th>Fork</th>
+                <td>@bike.Fork</td>
+            </tr>
+            <tr>
+                <th>Wheelset</th>
+                <td>@bike.Wheelset</td>
+            </tr>
+            <tr>
+                <th>Brakes</th>
+                <td>@bike.Brakes</td>
+            </tr>
+            <tr>
+                <th>Front Brake Rotor</th>
+                <td>@bike.FrontBrakeRotor</td>
+            </tr>
+            <tr>
+                <th>Rear Brake Rotor</th>
+                <td>@bike.RearBrakeRotor</td>
+            </tr>
+            <tr>
+                <th>Crankset</th>
+                <td>@bike.Crankset</td>
+            </tr>
+            <tr>
+                <th>Seatpost</th>
+                <td>@bike.Seatpost</td>
+            </tr>
+            <tr>
+                <th>Shock</th>
+                <td>@bike.Shock</td>
+            </tr>
+            <tr>
+                <th>Stem</th>
+                <td>@bike.Stem</td>
+            </tr>
+            <tr>
+                <th>Handlebar</th>
+                <td>@bike.Handlebar</td>
+            </tr>
+            <tr>
+                <th>Saddle</th>
+                <td>@bike.Saddle</td>
+            </tr>
+            <tr>
+                <th>Tires</th>
+                <td>@bike.Tires</td>
+            </tr>
+            <tr>
+                <th>Front Derailleur</th>
+                <td>@bike.FrontDerailleur</td>
+            </tr>
+            <tr>
+                <th>Rear Derailleur</th>
+                <td>@bike.RearDerailleur</td>
+            </tr>
+            <tr>
+                <th>Images</th>
+                <td>@bike.Images</td>
+            </tr>
+        </tbody>
+    </table>
+    @test1
+    <hr/>
+    @test2
+}
+
+@functions {
+    ConventionalBike bike;
+    Office office;
+    //WeatherForecast[] forecasts;
+    string test1;
+    string test2;
+
+    protected override async Task OnInitAsync()
+    {
+        test1 = await (await Http.GetAsync("api/SampleData/WeatherForecasts")).Content?.ReadAsStringAsync();
+        var test3 = JArray.Parse(test1);
+        var test4 = (IEnumerable<JToken>)test3?.Children();
+        var test5 = test4.FirstOrDefault();
+        test2 = test5.ToString();
+        var test6 = test5.ToObject<WeatherForecast>();
+
+        //forecasts = await Http.GetJsonAsync<WeatherForecast[]>("api/SampleData/WeatherForecasts");
+        //bike = (await DeliveryClient.GetItemAsync<ConventionalBike>("conventional_xc_bike_1")).Item;
+        bike = new ConventionalBike();
+        //office = (await DeliveryClient.GetItemAsync<Office>("office_in_europe")).Item;
+    }
+}
