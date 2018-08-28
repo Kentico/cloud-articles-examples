@@ -17,3 +17,5 @@ The [example code](https://github.com/Kentico/cloud-articles-examples/tree/maste
 ## UWP example of Reactive Extensions for .NET (Rx.NET)
 
 The [example code](https://github.com/Kentico/cloud-articles-examples/tree/master/uwp-rx) that demonstrates the use of Rx.NET together with Kentico Cloud in an Universal Windows App (UWP).
+
+ ![Analytics](https://kentico-ga-beacon.azurewebsites.net/api/UA-69014260-4/Kentico/cloud-articles-examples?pixel)
