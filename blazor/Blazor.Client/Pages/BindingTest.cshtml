@@ -1,0 +1,13 @@
+﻿<input type="checkbox" checked="@bulik" />
+
+<button onclick="@SwapBulik" title="Swap bulik" />
+
+@functions {
+    private bool bulik;
+
+    private void SwapBulik()
+    {
+        bulik = bulik == false ? true : false;
+
+    }
+}

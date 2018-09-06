@@ -1,0 +1,19 @@
+﻿@page "/counter"
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<BindingTest />
+
+<button class="btn btn-primary" onclick="@IncrementCount">Click me</button>
+
+@functions {
+    int currentCount = 0;
+    string text = "Ahoj";
+
+    void IncrementCount()
+    {
+        currentCount++;
+    }
+}
