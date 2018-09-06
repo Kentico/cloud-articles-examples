@@ -1,6 +1,7 @@
 ﻿@using Blazor.Shared
 @using Blazor.Shared.Models
 @using KenticoCloud.Delivery
+@using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @page "/kc"
 @inject IDeliveryClient DeliveryClient
@@ -118,11 +119,12 @@ else
         var test4 = (IEnumerable<JToken>)test3?.Children();
         var test5 = test4.FirstOrDefault();
         test2 = test5.ToString();
-        var test6 = test5.ToObject<WeatherForecast>();
+        var test7 = JObject.Parse(test2);
+        var test6 = test7.ToObject<WeatherForecast>();
 
         //forecasts = await Http.GetJsonAsync<WeatherForecast[]>("api/SampleData/WeatherForecasts");
-        //bike = (await DeliveryClient.GetItemAsync<ConventionalBike>("conventional_xc_bike_1")).Item;
-        bike = new ConventionalBike();
+        bike = (await DeliveryClient.GetItemAsync<ConventionalBike>("conventional_xc_bike_1")).Item;
+        //bike = new ConventionalBike();
         //office = (await DeliveryClient.GetItemAsync<Office>("office_in_europe")).Item;
     }
 }

@@ -23,7 +23,7 @@ namespace Blazor.Client
 
                 services.AddSingleton(new DeliveryOptions
                 {
-                    ProjectId = "a97bde64-f954-4b41-b48f-322056c523ba"
+                    ProjectId = "c7f97958-715f-4d12-8ac2-7432cb124bf9" // "a97bde64 -f954-4b41-b48f-322056c523ba"
                 });
 
                 services.AddTransient<IDeliveryClient, DeliveryClient>(sp => new DeliveryClient(

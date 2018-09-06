@@ -46,7 +46,7 @@ namespace Blazor.Shared.Models
 
         #endregion
 
-        [JsonProperty("length__mm_")]
+        [JsonProperty("handlebar_diameter")]
         public IEnumerable<TaxonomyTerm> HandlebarDiameter { get; set; }
 
         [JsonProperty("length__mm_")]

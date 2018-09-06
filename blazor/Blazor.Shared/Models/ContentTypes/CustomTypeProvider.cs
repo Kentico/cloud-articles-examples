@@ -25,7 +25,7 @@ namespace Blazor.Shared.Models
                     return typeof(Crankset);
                 case "electric_bike":
                     return typeof(ElectricBike);
-                case "financial_service":
+                case "front_derailleur":
                     return typeof(FrontDerailleur);
                 case "handlebar":
                     return typeof(Handlebar);
