@@ -1,43 +1,38 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using KenticoCloud.Delivery;
 
 namespace NavigationMenusMvc.Models
 {
     public class CustomTypeProvider : ICodeFirstTypeProvider
     {
+        private static readonly Dictionary<Type, string> _codenames = new Dictionary<Type, string>
+        {
+            {typeof(AboutUs), "about_us"},
+            {typeof(Accessory), "accessory"},
+            {typeof(Article), "article"},
+            {typeof(Brewer), "brewer"},
+            {typeof(Cafe), "cafe"},
+            {typeof(Coffee), "coffee"},
+            {typeof(FactAboutUs), "fact_about_us"},
+            {typeof(Grinder), "grinder"},
+            {typeof(HeroUnit), "hero_unit"},
+            {typeof(Home), "home"},
+            {typeof(NavigationItem), "navigation_item"},
+            {typeof(Office), "office"},
+            {typeof(ContentListing), "content_listing"}
+        };
+
         public Type GetType(string contentType)
         {
-            switch (contentType)
-            {
-                case "about_us":
-                    return typeof(AboutUs);
-                case "accessory":
-                    return typeof(Accessory);
-                case "article":
-                    return typeof(Article);
-                case "brewer":
-                    return typeof(Brewer);
-                case "cafe":
-                    return typeof(Cafe);
-                case "coffee":
-                    return typeof(Coffee);
-                case "fact_about_us":
-                    return typeof(FactAboutUs);
-                case "grinder":
-                    return typeof(Grinder);
-                case "hero_unit":
-                    return typeof(HeroUnit);
-                case "home":
-                    return typeof(Home);
-                case "navigation_item":
-                    return typeof(NavigationItem);
-                case "office":
-                    return typeof(Office);
-                case "content_listing":
-                    return typeof(ContentListing);
-                default:
-                    return null;
-            }
+            return _codenames.Keys.FirstOrDefault(type => GetCodename(type).Equals(contentType));
+        }
+
+        public string GetCodename(Type contentType)
+        {
+            return _codenames.TryGetValue(contentType, out var codename) ? codename : null;
         }
     }
 }
