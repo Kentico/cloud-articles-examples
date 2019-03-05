@@ -1,6 +1,6 @@
 # Kentico Cloud Code Examples
 
-A common repository for code examples used in articles, blog posts, forums, etc.
+A common repository for code examples used in articles, blog posts, etc.
 
 ## Structured Rich Text Rendering in MVC
 
