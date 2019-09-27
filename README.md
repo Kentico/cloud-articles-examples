@@ -1,5 +1,10 @@
-# Kentico Cloud Code Examples
+# ARCHIVED - Kentico Cloud Code Examples
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
+
+> <h2 align="center">:warning:<br><br>Archive Notice</h2>
+> This repository is no longer being used for blog post code, and the examples will not be maintained for compatibility with the latest version of the product. Examples in this repository refer to the previous product name, <strong>Kentico Cloud</strong>, rather than the new product name, <strong>Kentico Kontent</strong>.
+  
 A common repository for code examples used in articles, blog posts, etc.
 
 ## Structured Rich Text Rendering in MVC
